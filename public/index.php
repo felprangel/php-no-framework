@@ -34,6 +34,3 @@ $middlewareQueue[] = new RequestHandler();
 
 $requestHandler = new Relay($middlewareQueue);
 $requestHandler->handle(ServerRequestFactory::fromGlobals());
-
-// $helloWorld = $container->get(HelloWorld::class);
-// $helloWorld->announce();
