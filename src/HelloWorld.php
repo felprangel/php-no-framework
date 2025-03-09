@@ -10,4 +10,10 @@ class HelloWorld
     {
         echo "Hello autoload world!";
     }
+
+    public function __invoke(): void
+    {
+        echo 'Hello, autoloaded world!';
+        exit;
+    }
 }
