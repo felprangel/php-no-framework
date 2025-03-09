@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use DI\ContainerBuilder;
 use FastRoute\RouteCollector;
+use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequestFactory;
 use Middlewares\FastRoute;
 use Middlewares\RequestHandler;
@@ -22,8 +23,11 @@ $containerBuilder->useAttributes(false);
 
 $containerBuilder->addDefinitions([
     HelloWorld::class => create(HelloWorld::class)
-        ->constructor(get('Foo')),
-    'Foo' => 'bar'
+        ->constructor(get('Foo'), get('Response')),
+    'Foo' => 'bar',
+    'Response' => function () {
+        return new Response();
+    }
 ]);
 
 $container = $containerBuilder->build();
