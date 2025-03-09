@@ -1,0 +1,17 @@
+{
+    "name": "felprangel/no-framework",
+    "description": "Um exemplo de uma aplicação PHP sem a utilização de um framework",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Felprangel\\NoFramework\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "felprangel",
+            "email": "feliperangel897@gmail.com"
+        }
+    ],
+    "require": {}
+}
