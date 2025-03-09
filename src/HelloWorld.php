@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace NoFramework;
 
+use Psr\Http\Message\ResponseInterface;
+
 class HelloWorld
 {
-    public function __construct(private string $foo) {}
+    public function __construct(
+        private string $foo,
+        private ResponseInterface $response
+    ) {}
 
-    public function __invoke(): void
+    public function __invoke(): ResponseInterface
     {
-        echo "Hello, {$this->foo} world!";
-        exit;
+        $response = $this->response->withHeader('Content-Type', 'text/html');
+        $response->getBody()
+            ->write("<html><head></head><body>Hello, {$this->foo} world!</body></html>");
+
+        return $response;
     }
 }
