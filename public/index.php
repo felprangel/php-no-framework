@@ -8,6 +8,7 @@ use Laminas\Diactoros\Response;
 use Laminas\Diactoros\ServerRequestFactory;
 use Middlewares\FastRoute;
 use Middlewares\RequestHandler;
+use Narrowspark\HttpEmitter\SapiEmitter;
 use NoFramework\HelloWorld;
 use Relay\Relay;
 
@@ -41,4 +42,7 @@ $middlewareQueue[] = new RequestHandler($container);
 
 
 $requestHandler = new Relay($middlewareQueue);
-$requestHandler->handle(ServerRequestFactory::fromGlobals());
+$response = $requestHandler->handle(ServerRequestFactory::fromGlobals());
+
+$emitter = new SapiEmitter();
+return $emitter->emit($response);
