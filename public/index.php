@@ -11,6 +11,7 @@ use NoFramework\HelloWorld;
 use Relay\Relay;
 
 use function DI\create;
+use function DI\get;
 use function FastRoute\simpleDispatcher;
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
@@ -18,8 +19,11 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->useAutowiring(false);
 $containerBuilder->useAttributes(false);
+
 $containerBuilder->addDefinitions([
     HelloWorld::class => create(HelloWorld::class)
+        ->constructor(get('Foo')),
+    'Foo' => 'bar'
 ]);
 
 $container = $containerBuilder->build();
@@ -29,7 +33,7 @@ $routes = simpleDispatcher(function (RouteCollector $route) {
 });
 
 $middlewareQueue[] = new FastRoute($routes);
-$middlewareQueue[] = new RequestHandler();
+$middlewareQueue[] = new RequestHandler($container);
 
 
 $requestHandler = new Relay($middlewareQueue);
