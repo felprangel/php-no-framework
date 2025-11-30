@@ -18,7 +18,9 @@ $map = [
 $path = $request->getPathInfo();
 
 if (isset($map[$path])) {
-    require $map[$path];
+    ob_start();
+    include $map[$path];
+    $response->setContent(ob_get_clean());
     $response->send();
     return;
 }
