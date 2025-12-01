@@ -19,12 +19,12 @@ $path = $request->getPathInfo();
 
 if (isset($map[$path])) {
     ob_start();
-    include $map[$path];
-    $response->setContent(ob_get_clean());
+    extract($request->query->all(), EXTR_SKIP);
+    include sprintf(__DIR__.'/../src/pages/%s.php', $map[$path]);
+    $response = new Response(ob_get_clean());
     $response->send();
     return;
 }
 
-$response->setStatusCode(404);
-$response->setContent('Not Found');
+$response = new Response('Not Found', 404);
 $response->send();
