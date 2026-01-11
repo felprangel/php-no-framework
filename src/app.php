@@ -1,6 +1,6 @@
 <?php
 
-use App\LeapYearController;
+use App\Controller\Calendar\LeapYearController;
 use Symfony\Component\Routing;
 
 $routes = new Routing\RouteCollection();
